@@ -34,69 +34,136 @@ function launchModal() {
 
 const form = document.querySelector("form");
 
+const getPrenom = () => {
+  const PrenomValue = document.getElementById("first").value;
+  const errorPrenom = document.querySelector("#prenom-error");
+  const borderPrenom = document.querySelector(".inpPrenom");
+
+  if (PrenomValue === "") {
+    borderPrenom.style.border = "0.8px outset red";
+    errorPrenom.textContent = "Veuillez renseigner ce champ";
+    return false;
+    
+  } if (PrenomValue.length < 2) {
+    errorPrenom.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
+    return false;
+  }
+  borderPrenom.style.border = "0.8px outset #ccc";
+  errorPrenom.textContent = "";
+  return true;
+}
+
+// lastName + validation
+
+const getNom = () => {
+  const NomValue = document.getElementById("last").value;
+  const errorNom = document.querySelector("#nom-error");
+  const borderNom = document.querySelector(".inpNom");
+
+  if (NomValue === "") {
+    borderNom.style.border = "0.8px outset red";
+    errorNom.textContent = "Veuillez renseigner ce champ";
+    return false;
+  }
+  if (NomValue.length < 2) {
+    borderNom.style.border = "0.8px outset red";
+    errorNom.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+    return false;
+  }
+    borderNom.style.border = "0.8px outset #ccc";
+    errorNom.textContent = "";
+    return true;
+}
+
+const getEmail = () => {
+  const EmailValue = document.getElementById("email").value;
+  const errorEmail = document.querySelector("#email-error");
+  const borderEmail = document.querySelector(".inpEmail");
+
+  if (EmailValue.length < 2) {
+    borderEmail.style.border = "0.8px outset red";
+    errorEmail.textContent = "Veuillez rentrer une adresse mail valide";
+    return false;
+  }
+  if (EmailValue.value === "") {
+    errorEmail.textContent = "";
+    return false;
+  }
+  borderEmail.style.border = "0.8px outset #ccc";
+  errorEmail.textContent = "";
+  return true;
+}
+
+const getLimitYears = () => {
+  const NowDate = new Date;
+  NowDate.setFullYear(NowDate.getFullYear()-16)
+  const LimitYears = NowDate.getFullYear();
+
+  console.log("Date Lmit : " + LimitYears);
+  return LimitYears;
+}
+
+const LimitYearsResult = getLimitYears();
+
+const getDate = () => {
+  const DATE = document.getElementById("birthdate").value;
+  const errorDATE = document.querySelector("#date-error");
+  const borderDATE = document.querySelector(".inpDATE");
+
+  if (DATE === "") {
+    borderDATE.style.border = "0.8px outset red";
+    errorDATE.textContent="Veuillez renseigner ce champ";
+    return false;
+  }
+  else if ((DATE.substr(0, 4)) > LimitYearsResult) {
+    borderDATE.style.border = "0.8px outset red";
+    errorDATE.textContent="Vous devez avoir au moins 16 ans pour pouvoir vous inscrire";
+    return false;
+  }
+    borderDATE.style.border = "0.8px outset #ccc";
+    errorDATE.textContent = "";
+    return true;  
+}
+
+const getQuantite = () => {
+  const QtnValue = document.getElementById("last").value;
+  const errorQtn = document.querySelector("#qtn-error");
+  const borderQtn = document.querySelector(".inpQtn");
+
+  if (QtnValue === "") {
+    borderQtn.style.border = "0.8px outset red";
+    errorQtn.textContent = "Veuillez renseigner ce champ"
+    return false;
+  } else {
+    borderQtn.style.border = "0.8px outset #ccc";
+    errorQtn.textContent = "";
+    return true;  
+  }
+}
+
+const getLocation = () => {
+  const LocationValue = document.getElementById("checkbox-input").checked;
+  if (LocationValue === "") {
+    console.log("test");
+  }
+}
+
+const validatedFormContent = () => {
+  modalbg.style.display = "none";
+};
+
 // SUBMIT
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  const CheckPrenom = getPrenom();
+  const CheckNom = getNom();
+  const CheckEmail = getEmail();
+  const CheckDate = getDate();
+  const CheckQuantite = getQuantite();
+  const CheckLocation = getLocation();
 
-  // INPUT FIELDS
-  let prenom = document.getElementById("first");
-  let nom = document.getElementById("last");
-  let email = document.getElementById("email");
-  let date = document.getElementById("birthdate");
-  let quantity = document.getElementById("quantity");
-  let allLocations = document.querySelectorAll(".checkbox-input[type='radio']");
-  let conditions = document.querySelector(".conditions");
-
-  // ERROR MESSAGES
-  const prenomError = document.querySelector(".prenom-error");
-  const nomError = document.querySelector(".nom-error");
-  const emailError = document.querySelector(".email-error");
-  const dateError = document.querySelector(".date-error");
-  const quantityError = document.querySelector(".quantity-error");
-  const locationError = document.querySelector(".location-error");
-  const conditionsError = document.querySelector(".conditions-error");
-
-  // Prénom
-  const getPrenom = () => {
-    let resultprenom;
-    if (prenom.value === "") {
-      prenomError.textContent = "Veuillez renseigner ce champ !";
-      prenom.focus();
-      resultprenom = false;
-    } else if (prenom.value.length < 2) {
-      prenom.focus();
-      resultprenom = false;
-    } else {
-      prenomError.textContent = "";
-      resultprenom = true;
-    }
-    return resultprenom;
-  };
-  const PrenomResult = getPrenom();
-
-  // Nom
-  const getNom = () => {
-    let resultNom;
-    if (nom.value === "") {
-      nomError.textContent = "Veuillez renseigner ce champ !";
-      nom.focus();
-      resultNom = false;
-    } else if (Nom.value.length < 2) {
-      nom.focus();
-      resultNom = false;
-    } else {
-      nomError.textContent = "";
-      resultNom = true;
-    }
-    return resultNom;
-  };
-  const NomResult = getNom();
-
-  function validatedFormContent() {
-    modalbg.style.display = "none";
-  }
-
-  if (PrenomResult && NomResult) {
+  if (CheckPrenom === true && CheckNom === true && CheckEmail === true && CheckDate === true) {
     validatedFormContent();
+    form.style.display = "none";
   }
 });

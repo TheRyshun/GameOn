@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Reservation</title>
+    <title>GameOn | Thomas Tetrel</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="modal.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -66,49 +66,53 @@
                 class="formData">
                 <label>Prénom</label><br>
                 <input
-                  class="text-control"
+                  class="text-control inpPrenom"
                   type="text"
                   id="first"
                   name="first"
                   minlength="2"
                 /><br>
-                <small class="prenom-error"></small>
+                <span id="prenom-error" class="error-message"></span>
               </div>
               <div
                 class="formData">
                 <label>Nom</label><br>
                 <input
-                  class="text-control"
+                  class="text-control inpNom"
                   type="text"
                   id="last"
                   name="last"
                 /><br>
-                <small class="nom-error"></small>
+                <span id="nom-error" class="error-message"></span>
               </div>
               <div
                 class="formData">
                 <label>E-mail</label><br>
                 <input
-                  class="text-control"
+                  class="text-control inpEmail"
                   type="email"
                   id="email"
                   name="email"
                 /><br>
+                <span id="email-error" class="error-message"></span>
               </div>
               <div
                 class="formData">
                 <label>Date de naissance</label><br>
                 <input
-                  class="text-control"
+                  class="text-control inpDATE"
                   type="date"
                   id="birthdate"
                   name="birthdate"
                 /><br>
+                <span id="date-error" class="error-message"></span>
               </div>
               <div
                 class="formData">
                 <label>À combien de tournois GameOn avez-vous déjà participé ?</label><br>
-                <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
+                <span id="qtn-error" class="error-message"></span>
+                <input type="number" class="text-control inpQtn" id="quantity" name="quantity" min="0" max="99">
+                <small class="quantity-error"></small>
               </div>
               <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
               <div
