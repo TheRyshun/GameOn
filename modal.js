@@ -33,29 +33,36 @@ function launchModal() {
 }
 
 const form = document.querySelector("form");
+let ValidatePrenom;
 
-const getPrenom = () => {
+form.addEventListener('input', function() {
   const PrenomValue = document.getElementById("first").value;
   const errorPrenom = document.querySelector("#prenom-error");
   const borderPrenom = document.querySelector(".inpPrenom");
 
+
   if (PrenomValue === "") {
     borderPrenom.style.border = "0.8px outset red";
     errorPrenom.textContent = "Veuillez renseigner ce champ";
-    return false;
+    ValidatePrenom = false;
     
   } if (PrenomValue.length < 2) {
+    borderPrenom.style.border = "0.8px outset red";
     errorPrenom.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
-    return false;
+    ValidatePrenom = false;
   }
-  borderPrenom.style.border = "0.8px outset #ccc";
-  errorPrenom.textContent = "";
-  return true;
-}
+  
+  if (PrenomValue.length > 2) {
+    borderPrenom.style.border = "0.8px outset #ccc";
+    errorPrenom.textContent = "";
+    ValidatePrenom = true;
+  }
+});
 
 // lastName + validation
 
-const getNom = () => {
+let ValidateNom;
+form.addEventListener('input', function() {
   const NomValue = document.getElementById("last").value;
   const errorNom = document.querySelector("#nom-error");
   const borderNom = document.querySelector(".inpNom");
@@ -63,36 +70,44 @@ const getNom = () => {
   if (NomValue === "") {
     borderNom.style.border = "0.8px outset red";
     errorNom.textContent = "Veuillez renseigner ce champ";
-    return false;
+    ValidateNom = false;
   }
   if (NomValue.length < 2) {
     borderNom.style.border = "0.8px outset red";
     errorNom.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
-    return false;
+    ValidateNom = false;
   }
+
+  if (NomValue.length > 2) {
     borderNom.style.border = "0.8px outset #ccc";
     errorNom.textContent = "";
-    return true;
-}
+    ValidateNom = true;
+  }
+});
 
-const getEmail = () => {
+let ValidateEmail;
+form.addEventListener('input', function() {
   const EmailValue = document.getElementById("email").value;
   const errorEmail = document.querySelector("#email-error");
   const borderEmail = document.querySelector(".inpEmail");
 
+
   if (EmailValue.length < 2) {
     borderEmail.style.border = "0.8px outset red";
     errorEmail.textContent = "Veuillez rentrer une adresse mail valide";
-    return false;
+    ValidateEmail = false;
   }
   if (EmailValue.value === "") {
     errorEmail.textContent = "";
-    return false;
+    ValidateEmail = false;
   }
-  borderEmail.style.border = "0.8px outset #ccc";
-  errorEmail.textContent = "";
-  return true;
-}
+
+  if (EmailValue.length > 2) {
+    borderEmail.style.border = "0.8px outset #ccc";
+    errorEmail.textContent = "";
+    ValidateEmail = true;
+  }
+});
 
 const getLimitYears = () => {
   const NowDate = new Date;
@@ -105,14 +120,14 @@ const getLimitYears = () => {
 
 const LimitYearsResult = getLimitYears();
 
-const getDate = () => {
+form.addEventListener('input', function() {
   const DATE = document.getElementById("birthdate").value;
   const errorDATE = document.querySelector("#date-error");
   const borderDATE = document.querySelector(".inpDATE");
 
   if (DATE === "") {
     borderDATE.style.border = "0.8px outset red";
-    errorDATE.textContent="Veuillez renseigner ce champ";
+    errorDATE.textContent="Vous devez entrer votre date de naissance";
     return false;
   }
   else if ((DATE.substr(0, 4)) > LimitYearsResult) {
@@ -123,30 +138,45 @@ const getDate = () => {
     borderDATE.style.border = "0.8px outset #ccc";
     errorDATE.textContent = "";
     return true;  
-}
+});
 
-const getQuantite = () => {
-  const QtnValue = document.getElementById("last").value;
+let ValidateQtn;
+form.addEventListener('input', function() {
+  const QtnValue = document.getElementById("quantity").value;
   const errorQtn = document.querySelector("#qtn-error");
   const borderQtn = document.querySelector(".inpQtn");
 
   if (QtnValue === "") {
     borderQtn.style.border = "0.8px outset red";
     errorQtn.textContent = "Veuillez renseigner ce champ"
-    return false;
+    ValidateQtn = false;
   } else {
     borderQtn.style.border = "0.8px outset #ccc";
     errorQtn.textContent = "";
-    return true;  
+    ValidateQtn = true;  
   }
-}
+});
 
 const getLocation = () => {
-  const LocationValue = document.getElementById("checkbox-input").checked;
   if (LocationValue === "") {
     console.log("test");
   }
 }
+
+let ValidateCond;
+form.addEventListener('change', function() {
+  const conditions = document.querySelector(".conditions");
+  const errorCond = document.querySelector("#cond-error");
+
+  if (!conditions.checked) {
+    errorCond.textContent = "Vous devez vérifier que vous acceptez les termes et conditions";
+    ValidateCond = false;
+} else {
+  errorCond.textContent = "";
+  ValidateCond = true;
+}
+});
+
 
 const validatedFormContent = () => {
   modalbg.style.display = "none";
@@ -155,14 +185,8 @@ const validatedFormContent = () => {
 // SUBMIT
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const CheckPrenom = getPrenom();
-  const CheckNom = getNom();
-  const CheckEmail = getEmail();
-  const CheckDate = getDate();
-  const CheckQuantite = getQuantite();
-  const CheckLocation = getLocation();
 
-  if (CheckPrenom === true && CheckNom === true && CheckEmail === true && CheckDate === true) {
+  if (ValidatePrenom === true) {
     validatedFormContent();
     form.style.display = "none";
   }
