@@ -35,6 +35,11 @@ function launchModal() {
 
 const form = document.querySelector("form");
 
+let LogPrenom
+let LogNom
+let LogEmail
+let LogDate
+let LogQtn
 
 ///////////////////////////////
 
@@ -42,7 +47,6 @@ const form = document.querySelector("form");
 // Prénom //
 
 let ValidatePrenom;
-
 form.addEventListener('input', function() {
   const PrenomValue = document.getElementById("first").value;
   const errorPrenom = document.querySelector("#prenom-error");
@@ -64,9 +68,9 @@ form.addEventListener('input', function() {
     borderPrenom.style.border = "0.8px outset #ccc";
     errorPrenom.textContent = "";
     ValidatePrenom = true;
+    LogPrenom = PrenomValue;
   }
 });
-
 
 ///////////////////////////////
 
@@ -93,6 +97,7 @@ form.addEventListener('input', function() {
   if (NomValue.length > 2) {
     borderNom.style.border = "0.8px outset #ccc";
     errorNom.textContent = "";
+    LogNom = NomValue;
     ValidateNom = true;
   }
 });
@@ -122,6 +127,7 @@ form.addEventListener('input', function() {
   if (EmailValue.length > 2) {
     borderEmail.style.border = "0.8px outset #ccc";
     errorEmail.textContent = "";
+    LogEmail = EmailValue;
     ValidateEmail = true;
   }
 });
@@ -140,6 +146,7 @@ const getLimitYears = () => {
 }
 
 const LimitYearsResult = getLimitYears();
+let ValidateYears;
 
 form.addEventListener('input', function() {
   const DATE = document.getElementById("birthdate").value;
@@ -149,15 +156,19 @@ form.addEventListener('input', function() {
   if (DATE === "") {
     borderDATE.style.border = "0.8px outset red";
     errorDATE.textContent="Vous devez entrer votre date de naissance";
+    ValidateYears = false;
     return false;
   }
   else if ((DATE.substr(0, 4)) > LimitYearsResult) {
     borderDATE.style.border = "0.8px outset red";
     errorDATE.textContent="Vous devez avoir au moins 16 ans pour pouvoir vous inscrire";
+    ValidateYears = false;
     return false;
   }
     borderDATE.style.border = "0.8px outset #ccc";
     errorDATE.textContent = "";
+    ValidateYears = true;
+    LogDate = DATE;
     return true;  
 });
 
@@ -179,28 +190,34 @@ form.addEventListener('input', function() {
   } else {
     borderQtn.style.border = "0.8px outset #ccc";
     errorQtn.textContent = "";
+    LogQtn = QtnValue;
     ValidateQtn = true;  
   }
 });
 
 
 ///////////////////////////////
+
+// Localisations //
+
+let ValidateLoc;
 form.addEventListener('input', function() {
-  const locations = document.getElementsByClassName("location");
+  let location = document.querySelectorAll('input[name="location"]');
   const errorLoc = document.querySelector("#loc-error");
-
-  for (let i = 0; i < locations.length; i++) {
-    if (!locations[i].checked) {
-      errorLoc.textContent = "Veuillez sélectionner une ville";
-      console.log("test");
-      return true;
-    } else {
-      errorLoc.textContent = "";
-      return false;
-    }
-}
-})
-
+  let LocIsChecked = false
+  for (i = 0; i < location.length; i++) {
+      if (location[i].checked) {  
+        LocIsChecked = true
+      };
+  };
+  if(!LocIsChecked) {
+    errorLoc.textContent = "Veuillez sélectionner une ville";
+    ValidateLoc = false;
+  } else {
+    errorLoc.textContent = "";
+    ValidateLoc = true;
+  }
+});
 
 
 ///////////////////////////////
@@ -254,6 +271,15 @@ function closeValidate() {
 const validateContent = () => {
   form.style.display = "none";
   openvalidate.style.display = "flex";
+
+  console.log(
+    "Prénom : " + LogPrenom +
+    "\nNom : " + LogNom +
+    "\nEmail : " + LogEmail +
+    "\nDate : " + LogDate +
+    "\nNumber T : " + LogQtn +
+    "\nCondition : " + ValidateCond
+  );
 };
 
 ///////////////////////////////
@@ -265,7 +291,7 @@ form.addEventListener("submit", (e) => {
   
   e.preventDefault();
 
-  if (ValidatePrenom == true/* && ValidateNom == true && ValidateEmail == true && ValidateQtn == true*/) {
+  if (ValidatePrenom == true/* && ValidateNom == true && ValidateEmail == true && ValidateQtn == true && ValidateYears == true && ValidateCond == true*/) {
     validateContent();
   }
 });
