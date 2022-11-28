@@ -52,16 +52,16 @@ form.addEventListener('input', function() {
   const errorPrenom = document.querySelector("#prenom-error");
   const borderPrenom = document.querySelector(".inpPrenom");
 
+  if (PrenomValue.length < 2) {
+    borderPrenom.style.border = "0.8px outset red";
+    errorPrenom.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
+    ValidatePrenom = false;
+  }
 
   if (PrenomValue === "") {
     borderPrenom.style.border = "0.8px outset red";
     errorPrenom.textContent = "Veuillez renseigner ce champ";
-    ValidatePrenom = false;
-    
-  } if (PrenomValue.length < 2) {
-    borderPrenom.style.border = "0.8px outset red";
-    errorPrenom.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
-    ValidatePrenom = false;
+    ValidatePrenom = false; 
   }
   
   if (PrenomValue.length > 2) {
@@ -83,17 +83,18 @@ form.addEventListener('input', function() {
   const errorNom = document.querySelector("#nom-error");
   const borderNom = document.querySelector(".inpNom");
 
-  if (NomValue === "") {
-    borderNom.style.border = "0.8px outset red";
-    errorNom.textContent = "Veuillez renseigner ce champ";
-    ValidateNom = false;
-  }
   if (NomValue.length < 2) {
     borderNom.style.border = "0.8px outset red";
     errorNom.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
     ValidateNom = false;
   }
 
+  if (NomValue === "") {
+    borderNom.style.border = "0.8px outset red";
+    errorNom.textContent = "Veuillez renseigner ce champ";
+    ValidateNom = false;
+  }
+  
   if (NomValue.length > 2) {
     borderNom.style.border = "0.8px outset #ccc";
     errorNom.textContent = "";
@@ -108,23 +109,17 @@ form.addEventListener('input', function() {
 // E-mail //
 
 let ValidateEmail;
+const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 form.addEventListener('input', function() {
   const EmailValue = document.getElementById("email").value;
   const errorEmail = document.querySelector("#email-error");
   const borderEmail = document.querySelector(".inpEmail");
 
-
-  if (EmailValue.length < 2) {
+  if (!email.value.match(re)) {
     borderEmail.style.border = "0.8px outset red";
     errorEmail.textContent = "Veuillez rentrer une adresse mail valide";
     ValidateEmail = false;
-  }
-  if (EmailValue.value === "") {
-    errorEmail.textContent = "";
-    ValidateEmail = false;
-  }
-
-  if (EmailValue.length > 2) {
+  } else {
     borderEmail.style.border = "0.8px outset #ccc";
     errorEmail.textContent = "";
     LogEmail = EmailValue;
@@ -291,7 +286,7 @@ form.addEventListener("submit", (e) => {
   
   e.preventDefault();
 
-  if (ValidatePrenom == true/* && ValidateNom == true && ValidateEmail == true && ValidateQtn == true && ValidateYears == true && ValidateCond == true*/) {
+  if (ValidatePrenom == true && ValidateNom == true && ValidateEmail == true && ValidateQtn == true && ValidateYears == true && ValidateCond == true) {
     validateContent();
   }
 });
