@@ -262,9 +262,11 @@ form.addEventListener('input', function() {
 
 let ValidateCond;
 form.addEventListener('change', function() {
+  //Variable sur l'input Conditions
   const conditions = document.querySelector(".conditions");
   const errorCond = document.querySelector("#cond-error");
 
+  // Si la condition n'est pas check alors un avertissement apparaît
   if (!conditions.checked) {
     errorCond.textContent = "Vous devez vérifier que vous acceptez les termes et conditions";
     ValidateCond = false;
