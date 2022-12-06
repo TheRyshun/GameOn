@@ -72,6 +72,7 @@ const ValidatePrenom = () => {
   if (PrenomValue.length >= 2) {
     borderPrenom.style.border = "0.8px outset #ccc";
     errorPrenom.textContent = "";
+    LogPrenom = PrenomValue;
     return true;
   }
 };
@@ -110,6 +111,7 @@ const ValidateNom = () => {
   if (NomValue.length >= 2) {
     borderNom.style.border = "0.8px outset #ccc";
     errorNom.textContent = "";
+    LogNom = NomValue;
     return true;
   }
 };
@@ -140,6 +142,7 @@ const ValidateEmail = () => {
     // aucune border et l'alerte disparait (texte)
     borderEmail.style.border = "0.8px outset #ccc";
     errorEmail.textContent = "";
+    LogEmail = EmailValue;
     return true;
   }
 };
@@ -218,6 +221,7 @@ const ValidateQTN = () => {
     // aucune border et l'alerte disparait (texte)
     borderQtn.style.border = "0.8px outset #ccc";
     errorQtn.textContent = "";
+    LogQtn = QtnValue;
     return true;
   }
 };
@@ -302,23 +306,6 @@ function closeValidate() {
 const validateContent = () => {
   form.style.display = "none";
   openvalidate.style.display = "flex";
-
-  console.log(
-    "Prénom : " +
-      LogPrenom +
-      "\nNom : " +
-      LogNom +
-      "\nEmail : " +
-      LogEmail +
-      "\nDate : " +
-      LogDate +
-      "\nNumber T : " +
-      LogQtn +
-      "\nCondition : " +
-      ValidateCond +
-      "Pub : " +
-      ValidateEvent
-  );
 };
 
 ///////////////////////////////
@@ -335,15 +322,24 @@ form.addEventListener("submit", (e) => {
   const CheckLOC = ValidateLOC();
   const CheckCOND = ValidateCOND();
 
-  if (
-    CheckPrenom &&
-    CheckNom &&
-    CheckEmail &&
-    CheckDate &&
-    CheckQTN &&
-    CheckLOC &&
-    CheckCOND
-  ) {
+  if (CheckPrenom && CheckNom && CheckEmail && CheckDate && CheckQTN && CheckLOC && CheckCOND) {
+    
+  console.log(
+    "Prénom : " +
+      LogPrenom +
+      "\nNom : " +
+      LogNom +
+      "\nEmail : " +
+      LogEmail +
+      "\nDate : " +
+      LogDate +
+      "\nNumber T : " +
+      LogQtn +
+      "\nCondition : " +
+      CheckCOND +
+      "\nPub : " +
+      ValidateEvent
+  );
     validateContent();
   }
 });
